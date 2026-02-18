@@ -12,20 +12,15 @@ categories = ["gui"]
 readme = "README.md"
 
 [dependencies]
-iced_core.version = "0.15.0-dev"
-iced_runtime.version = "0.15.0-dev"
-iced_widget.version = "0.15.0-dev"
+iced_core = { git = "https://github.com/edwloef/iced.git", branch = "generic-daw" }
+iced_runtime = { git = "https://github.com/edwloef/iced.git", branch = "generic-daw" }
+iced_widget = { git = "https://github.com/edwloef/iced.git", branch = "generic-daw" }
 unicode-segmentation = "1.11.0"
 
 [dev-dependencies]
-iced.version = "0.15.0-dev"
-iced.features = ["advanced"]
-
-[patch.crates-io]
-iced.git = "https://github.com/iced-rs/iced.git"
-iced_core.git = "https://github.com/iced-rs/iced.git"
-iced_runtime.git = "https://github.com/iced-rs/iced.git"
-iced_widget.git = "https://github.com/iced-rs/iced.git"
+iced = { git = "https://github.com/edwloef/iced.git", branch = "generic-daw", features = [
+	"advanced",
+] }
 
 # For testing new bleeding edge iced features
 # iced.path = "../iced"

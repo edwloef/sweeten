@@ -337,7 +337,8 @@ where
             align_x: text::Alignment::Default,
             align_y: alignment::Vertical::Center,
             shaping: text::Shaping::Advanced,
-            wrapping: text::Wrapping::default(),
+            wrapping: text::Wrapping::None,
+            ellipsis: text::Ellipsis::None,
             hint_factor: renderer.scale_factor(),
         };
 
@@ -363,7 +364,8 @@ where
                 align_x: text::Alignment::Center,
                 align_y: alignment::Vertical::Center,
                 shaping: text::Shaping::Advanced,
-                wrapping: text::Wrapping::default(),
+                wrapping: text::Wrapping::None,
+                ellipsis: text::Ellipsis::None,
                 hint_factor: renderer.scale_factor(),
             };
 
@@ -750,7 +752,10 @@ where
         }
 
         match &event {
-            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left))
+            Event::Mouse(mouse::Event::ButtonPressed {
+                button: mouse::Button::Left,
+                ..
+            })
             | Event::Touch(touch::Event::FingerPressed { .. }) => {
                 let state = state::<Renderer>(tree);
                 let cursor_before = state.cursor;
@@ -871,12 +876,15 @@ where
                     shell.capture_event();
                 }
             }
-            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left))
+            Event::Mouse(mouse::Event::ButtonReleased {
+                button: mouse::Button::Left,
+                ..
+            })
             | Event::Touch(touch::Event::FingerLifted { .. })
             | Event::Touch(touch::Event::FingerLost { .. }) => {
                 state::<Renderer>(tree).is_dragging = None;
             }
-            Event::Mouse(mouse::Event::CursorMoved { position })
+            Event::Mouse(mouse::Event::CursorMoved { position, .. })
             | Event::Touch(touch::Event::FingerMoved { position, .. }) => {
                 let state = state::<Renderer>(tree);
 
@@ -1765,7 +1773,8 @@ fn replace_paragraph<Renderer>(
         align_x: text::Alignment::Default,
         align_y: alignment::Vertical::Center,
         shaping: text::Shaping::Advanced,
-        wrapping: text::Wrapping::default(),
+        wrapping: text::Wrapping::None,
+        ellipsis: text::Ellipsis::None,
         hint_factor: renderer.scale_factor(),
     });
 }
@@ -1836,7 +1845,7 @@ impl Catalog for Theme {
 
 /// The default style of a [`TextInput`].
 pub fn default(theme: &Theme, status: Status) -> Style {
-    let palette = theme.extended_palette();
+    let palette = theme.palette();
 
     let active = Style {
         background: Background::Color(palette.background.base.color),

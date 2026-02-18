@@ -497,7 +497,10 @@ where
                     }
                 }
             }
-            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)) => {
+            Event::Mouse(mouse::Event::ButtonPressed {
+                button: mouse::Button::Left,
+                ..
+            }) => {
                 if self.on_drag.is_some()
                     && let Some(cursor_position) =
                         cursor.position_over(layout.bounds())
@@ -635,7 +638,10 @@ where
                 }
                 _ => {}
             },
-            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)) => {
+            Event::Mouse(mouse::Event::ButtonReleased {
+                button: mouse::Button::Left,
+                ..
+            }) => {
                 match action {
                     Action::Dragging {
                         index,
@@ -1056,25 +1062,16 @@ impl Catalog for crate::Theme {
 
 /// The default style for a [`Column`].
 pub fn default(theme: &crate::Theme) -> Style {
+    let palette = theme.palette();
+
     Style {
         scale: 1.05,
-        moved_item_overlay: theme
-            .extended_palette()
-            .primary
-            .base
-            .color
-            .scale_alpha(0.2),
+        moved_item_overlay: palette.primary.base.color.scale_alpha(0.2),
         ghost_border: Border {
             width: 1.0,
-            color: theme.extended_palette().secondary.base.color,
+            color: palette.secondary.base.color,
             radius: 0.0.into(),
         },
-        ghost_background: theme
-            .extended_palette()
-            .secondary
-            .base
-            .color
-            .scale_alpha(0.2)
-            .into(),
+        ghost_background: palette.secondary.base.color.scale_alpha(0.2).into(),
     }
 }
