@@ -15,20 +15,15 @@ readme = "README.md"
 crisp = ["iced_core/crisp"]
 
 [dependencies]
-iced_core.version = "0.15.0-dev"
-iced_runtime.version = "0.15.0-dev"
-iced_widget.version = "0.15.0-dev"
+iced_core = { git = "https://github.com/edwloef/iced.git", branch = "generic-daw" }
+iced_runtime = { git = "https://github.com/edwloef/iced.git", branch = "generic-daw" }
+iced_widget = { git = "https://github.com/edwloef/iced.git", branch = "generic-daw" }
 unicode-segmentation = "1.11.0"
 
 [dev-dependencies]
-iced.version = "0.15.0-dev"
-iced.features = ["advanced"]
-
-[patch.crates-io]
-iced = { git = "https://github.com/iced-rs/iced.git", branch = "master" }
-iced_core = { git = "https://github.com/iced-rs/iced.git", branch = "master" }
-iced_runtime = { git = "https://github.com/iced-rs/iced.git", branch = "master" }
-iced_widget = { git = "https://github.com/iced-rs/iced.git", branch = "master" }
+iced = { git = "https://github.com/edwloef/iced.git", branch = "generic-daw", features = [
+	"advanced",
+] }
 
 # Uncomment to test against local iced checkout
 # [patch.crates-io]

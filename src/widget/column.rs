@@ -670,7 +670,10 @@ where
                     }
                 }
             }
-            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)) => {
+            Event::Mouse(mouse::Event::ButtonPressed {
+                button: mouse::Button::Left,
+                ..
+            }) => {
                 if self.on_drag.is_some()
                     && let Some(cursor_position) =
                         cursor.position_over(layout.bounds())
@@ -810,7 +813,10 @@ where
                 }
                 _ => {}
             },
-            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left)) => {
+            Event::Mouse(mouse::Event::ButtonReleased {
+                button: mouse::Button::Left,
+                ..
+            }) => {
                 match action {
                     Action::Dragging {
                         index,

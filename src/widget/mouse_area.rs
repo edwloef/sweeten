@@ -437,7 +437,10 @@ fn update<Message, Theme, Renderer>(
     }
 
     match event {
-        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left))
+        Event::Mouse(mouse::Event::ButtonPressed {
+            button: mouse::Button::Left,
+            ..
+        })
         | Event::Touch(touch::Event::FingerPressed { .. }) => {
             if let Some(on_press) = widget.on_press.as_ref()
                 && let Some(position) = cursor.position_in(layout.bounds())
@@ -466,7 +469,10 @@ fn update<Message, Theme, Renderer>(
                 shell.capture_event();
             }
         }
-        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left))
+        Event::Mouse(mouse::Event::ButtonReleased {
+            button: mouse::Button::Left,
+            ..
+        })
         | Event::Touch(touch::Event::FingerLifted { .. }) => {
             if let Some(on_release) = widget.on_release.as_ref()
                 && let Some(position) = cursor.position_in(layout.bounds())
@@ -474,7 +480,10 @@ fn update<Message, Theme, Renderer>(
                 shell.publish(on_release(position));
             }
         }
-        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Right)) => {
+        Event::Mouse(mouse::Event::ButtonPressed {
+            button: mouse::Button::Right,
+            ..
+        }) => {
             if let Some(on_right_press) = widget.on_right_press.as_ref()
                 && let Some(position) = cursor.position_in(layout.bounds())
             {
@@ -482,14 +491,20 @@ fn update<Message, Theme, Renderer>(
                 shell.capture_event();
             }
         }
-        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Right)) => {
+        Event::Mouse(mouse::Event::ButtonReleased {
+            button: mouse::Button::Right,
+            ..
+        }) => {
             if let Some(on_right_release) = widget.on_right_release.as_ref()
                 && let Some(position) = cursor.position_in(layout.bounds())
             {
                 shell.publish(on_right_release(position));
             }
         }
-        Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Middle)) => {
+        Event::Mouse(mouse::Event::ButtonPressed {
+            button: mouse::Button::Middle,
+            ..
+        }) => {
             if let Some(on_middle_press) = widget.on_middle_press.as_ref()
                 && let Some(position) = cursor.position_in(layout.bounds())
             {
@@ -497,14 +512,17 @@ fn update<Message, Theme, Renderer>(
                 shell.capture_event();
             }
         }
-        Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Middle)) => {
+        Event::Mouse(mouse::Event::ButtonReleased {
+            button: mouse::Button::Middle,
+            ..
+        }) => {
             if let Some(on_middle_release) = widget.on_middle_release.as_ref()
                 && let Some(position) = cursor.position_in(layout.bounds())
             {
                 shell.publish(on_middle_release(position));
             }
         }
-        Event::Mouse(mouse::Event::WheelScrolled { delta }) => {
+        Event::Mouse(mouse::Event::WheelScrolled { delta, .. }) => {
             if let Some(on_scroll) = widget.on_scroll.as_ref() {
                 shell.publish(on_scroll(*delta));
                 shell.capture_event();
