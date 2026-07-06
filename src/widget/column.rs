@@ -640,6 +640,12 @@ where
             .zip(&mut tree.children)
             .zip(layout.children())
         {
+            let cursor = if matches!(action, Action::Dragging { .. }) {
+                cursor.levitate()
+            } else {
+                cursor
+            };
+
             child.as_widget_mut().update(
                 state, event, layout, cursor, renderer, shell, viewport,
             );
@@ -1022,7 +1028,7 @@ where
                             theme,
                             defaults,
                             child_layout,
-                            cursor,
+                            cursor.levitate(),
                             viewport,
                         );
 
@@ -1068,7 +1074,7 @@ where
                                     theme,
                                     defaults,
                                     child_layout,
-                                    cursor,
+                                    cursor.levitate(),
                                     viewport,
                                 );
                             },
