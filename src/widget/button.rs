@@ -371,8 +371,10 @@ where
         // otherwise trip, leaving the button stuck showing focus.
         if matches!(
             event,
-            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left))
-                | Event::Touch(touch::Event::FingerPressed { .. })
+            Event::Mouse(mouse::Event::ButtonPressed {
+                button: mouse::Button::Left,
+                ..
+            }) | Event::Touch(touch::Event::FingerPressed { .. })
         ) && !cursor.is_over(layout.bounds())
         {
             let state = tree.state.downcast_mut::<State>();
@@ -408,7 +410,10 @@ where
         }
 
         match event {
-            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left))
+            Event::Mouse(mouse::Event::ButtonPressed {
+                button: mouse::Button::Left,
+                ..
+            })
             | Event::Touch(touch::Event::FingerPressed { .. }) => {
                 let state = tree.state.downcast_mut::<State>();
                 let bounds = layout.bounds();
@@ -432,7 +437,10 @@ where
                     state.focus = Some(focus::Source::Mouse);
                 }
             }
-            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left))
+            Event::Mouse(mouse::Event::ButtonReleased {
+                button: mouse::Button::Left,
+                ..
+            })
             | Event::Touch(touch::Event::FingerLifted { .. }) => {
                 if let Some(on_press) = &self.on_press {
                     let state = tree.state.downcast_mut::<State>();

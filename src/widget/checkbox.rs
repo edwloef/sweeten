@@ -445,7 +445,10 @@ where
         // not toggle. We track press-inside in `state.is_pressed` and
         // gate the publish on a fresh "still inside" bounds check.
         match event {
-            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left))
+            Event::Mouse(mouse::Event::ButtonPressed {
+                button: mouse::Button::Left,
+                ..
+            })
             | Event::Touch(touch::Event::FingerPressed { .. }) => {
                 if self.on_toggle.is_some() && cursor.is_over(layout.bounds()) {
                     state.is_pressed = true;
@@ -472,7 +475,10 @@ where
                     }
                 }
             }
-            Event::Mouse(mouse::Event::ButtonReleased(mouse::Button::Left))
+            Event::Mouse(mouse::Event::ButtonReleased {
+                button: mouse::Button::Left,
+                ..
+            })
             | Event::Touch(touch::Event::FingerLifted { .. })
             | Event::Touch(touch::Event::FingerLost { .. }) => {
                 let was_pressed =

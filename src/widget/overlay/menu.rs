@@ -742,7 +742,7 @@ where
         let over_bottom = cursor.is_over(bottom_strip);
 
         match event {
-            Event::Mouse(mouse::Event::ButtonPressed(_))
+            Event::Mouse(mouse::Event::ButtonPressed { .. })
             | Event::Touch(touch::Event::FingerPressed { .. })
                 if over_top || over_bottom =>
             {
@@ -1269,7 +1269,10 @@ where
         viewport: &Rectangle,
     ) {
         match event {
-            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left))
+            Event::Mouse(mouse::Event::ButtonPressed {
+                button: mouse::Button::Left,
+                ..
+            })
             | Event::Touch(touch::Event::FingerPressed { .. }) => {
                 if let Some(position) = cursor.position_over(layout.bounds())
                     && let Some(index) = self.option_at(layout, position)

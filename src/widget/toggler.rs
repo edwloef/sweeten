@@ -388,9 +388,10 @@ where
 
         if let Some(on_toggle) = &self.on_toggle {
             match event {
-                Event::Mouse(mouse::Event::ButtonPressed(
-                    mouse::Button::Left,
-                ))
+                Event::Mouse(mouse::Event::ButtonPressed {
+                    button: mouse::Button::Left,
+                    ..
+                })
                 | Event::Touch(touch::Event::FingerPressed { .. }) => {
                     let mouse_over = cursor.is_over(layout.bounds());
 

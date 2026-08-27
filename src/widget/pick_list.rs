@@ -815,7 +815,10 @@ where
         }
 
         match event {
-            Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left))
+            Event::Mouse(mouse::Event::ButtonPressed {
+                button: mouse::Button::Left,
+                ..
+            })
             | Event::Touch(touch::Event::FingerPressed { .. }) => {
                 let is_over = cursor.is_over(layout.bounds());
 
@@ -861,6 +864,7 @@ where
             }
             Event::Mouse(mouse::Event::WheelScrolled {
                 delta: mouse::ScrollDelta::Lines { y, .. },
+                ..
             }) => {
                 let Some(on_select) = &self.on_select else {
                     return;
